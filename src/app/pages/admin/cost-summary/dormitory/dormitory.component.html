@@ -1,0 +1,153 @@
+<div class="row">
+  <div class="col-md mb-3">
+    <h2>ค่าหอพักนักศึกษา</h2>
+  </div>
+  <div class="col-md mb-3">
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>วันที่</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            [formControl]="date"
+            readonly
+            (click)="picker1.open()"
+            (dateChange)="dateChange($event.value)"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <div class="dropdown">
+          <button
+            class="btn btn-warning btn-sm dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            [disabled]="listStudentCostOnDate.length <= 0"
+          >
+            Export
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a
+              class="dropdown-item"
+              href="javascript:void(0)"
+              (click)="
+                exportFile(
+                  listStudentCostOnDate,
+                  'ค่าหอพักนักศึกษาประจำวัน',
+                  'pdf'
+                )
+              "
+              >PDF</a
+            >
+            <a
+              class="dropdown-item"
+              href="javascript:void(0)"
+              (click)="
+                exportFile(
+                  listStudentCostOnDate,
+                  'ค่าหอพักนักศึกษาประจำวัน',
+                  'xls'
+                )
+              "
+              >Excel (XLS)</a
+            >
+            <a
+              class="dropdown-item"
+              href="javascript:void(0)"
+              (click)="
+                exportFile(
+                  listStudentCostOnDate,
+                  'ค่าหอพักนักศึกษาประจำวัน',
+                  'xlsx'
+                )
+              "
+              >Excel (XLSX)</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div
+    class="card-body"
+    *ngIf="listStudentCostOnDate.length <= 0; else isValue"
+  >
+    <h4>ไม่พบข้อมูล</h4>
+  </div>
+  <ng-template #isValue>
+    <div class="card-body">
+      <table class="table table-bordered table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ลำดับที่</th>
+            <th scope="col">วันที่ใบเสร็จ</th>
+            <th scope="col">เลขที่ใบเสร็จ</th>
+            <th scope="col">ห้องที่</th>
+            <th scope="col">รหัสนักศึกษา</th>
+            <th scope="col">ชื่อ-นามสกุล</th>
+            <th scope="col">ภาคการศึกษา</th>
+            <th scope="col">ค่าห้องพัก</th>
+            <th scope="col">ค่าไฟล่วงหน้า</th>
+            <th scope="col">ค่าน้ำประปาเหมาจ่าย</th>
+            <th scope="col">ค่าประกัน</th>
+            <th scope="col">รวม</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of listStudentCostOnDate; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ subDate(x.update_time) }}</td>
+            <td>{{ x.receiptNumber }}</td>
+            <td>{{ x.room_number }}</td>
+            <td>{{ x.studentId }}</td>
+            <td>{{ x.nameTitle }}{{ x.fname }} {{ x.lname }}</td>
+            <td>{{ x.term }}</td>
+            <td>{{ x.dorimitory }}</td>
+            <td>{{ x.electric_first }}</td>
+            <td>{{ x.water_first }}</td>
+            <td>{{ x.insurance }}</td>
+            <td>{{ sumCost(x) }}</td>
+          </tr>
+          <tr>
+            <td colspan="6" style="text-align: center">
+              {{
+                service.ArabicNumberToText(
+                  sumCol(listStudentCostOnDate, "dorimitory") +
+                    sumCol(listStudentCostOnDate, "electric_first") +
+                    sumCol(listStudentCostOnDate, "water_first") +
+                    sumCol(listStudentCostOnDate, "insurance")
+                )
+              }}
+            </td>
+            <td></td>
+            <td>{{ sumCol(listStudentCostOnDate, "dorimitory") }}</td>
+            <td>{{ sumCol(listStudentCostOnDate, "electric_first") }}</td>
+            <td>{{ sumCol(listStudentCostOnDate, "water_first") }}</td>
+            <td>{{ sumCol(listStudentCostOnDate, "insurance") }}</td>
+            <td>
+              {{
+                sumCol(listStudentCostOnDate, "dorimitory") +
+                  sumCol(listStudentCostOnDate, "electric_first") +
+                  sumCol(listStudentCostOnDate, "water_first") +
+                  sumCol(listStudentCostOnDate, "insurance")
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
+</div>

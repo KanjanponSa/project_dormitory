@@ -1,0 +1,21 @@
+<nav mat-tab-nav-bar style="border: unset;" class="bg-white box-shadow">
+  <a
+    mat-tab-link
+    [routerLink]="['/cost-manage/fan']"
+    routerLinkActive="router-active"
+  >
+    {{ "ห้องพัดลม" }}
+  </a>
+
+  <a
+    mat-tab-link
+    [routerLink]="['/cost-manage/air']"
+    routerLinkActive="router-active"
+  >
+    {{ "ห้องแอร์" }}
+  </a>
+</nav>
+
+<div class="box-padding">
+  <router-outlet></router-outlet>
+</div>

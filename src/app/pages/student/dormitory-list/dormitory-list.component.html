@@ -1,0 +1,353 @@
+<div class="box-padding" *ngIf="studentSearchData != null">
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md mb-3">
+          <h3>ภาคเรียนที่ 1</h3>
+        </div>
+        <div class="col-md mb-3 text-right"></div>
+      </div>
+
+      <table class="table table-sm table-borderless table-hover">
+        <thead>
+          <tr>
+            <th scope="col">รายการ</th>
+            <th scope="col">จำนวนเงินที่ต้องชำระ (บาท)</th>
+            <th scope="col">จำนวนเงินที่ชำระแล้ว (บาท)</th>
+            <th scope="col">จำนวนเงินที่ต้องชำระเพิ่ม (บาท)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="vertical-align: middle">ค่าหอพัก</td>
+            <td style="vertical-align: middle">
+              {{
+                searchCost(
+                  "1",
+                  studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                ).length > 0
+                  ? searchCost(
+                      "1",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    )[0]["dormitory"]
+                  : "0"
+              }}
+            </td>
+            <td style="vertical-align: middle">
+              {{ studentCostTerm1.dorimitory }}
+            </td>
+            <td style="vertical-align: middle">
+              <span *ngIf="studentCostTerm1" class="text-danger">
+                {{
+                  service.strToInt(
+                    searchCost(
+                      "1",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    ).length > 0
+                      ? searchCost(
+                          "1",
+                          studentSearchData.room_number.charAt(1) == "8"
+                            ? "2"
+                            : "1"
+                        )[0]["dormitory"]
+                      : "0"
+                  ) - studentCostTerm1.dorimitory
+                }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">ค่าประกันหอพัก</td>
+            <td style="vertical-align: middle">
+              {{
+                searchCost(
+                  "1",
+                  studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                ).length > 0
+                  ? searchCost(
+                      "1",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    )[0]["insurance"]
+                  : "0"
+              }}
+            </td>
+            <td style="vertical-align: middle">
+              {{ studentCostTerm1.insurance }}
+            </td>
+            <td style="vertical-align: middle">
+              <span *ngIf="studentCostTerm1" class="text-danger">
+                {{
+                  service.strToInt(
+                    searchCost(
+                      "1",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    ).length > 0
+                      ? searchCost(
+                          "1",
+                          studentSearchData.room_number.charAt(1) == "8"
+                            ? "2"
+                            : "1"
+                        )[0]["insurance"]
+                      : "0"
+                  ) - studentCostTerm1.insurance
+                }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">ค่าไฟฟ้าล่วงหน้า</td>
+            <td style="vertical-align: middle">
+              {{
+                searchCost(
+                  "1",
+                  studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                ).length > 0
+                  ? searchCost(
+                      "1",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    )[0]["electric_first"]
+                  : "0"
+              }}
+            </td>
+            <td style="vertical-align: middle">
+              {{ studentCostTerm1.electric_first }}
+            </td>
+            <td style="vertical-align: middle">
+              <span *ngIf="studentCostTerm1" class="text-danger">
+                {{
+                  service.strToInt(
+                    searchCost(
+                      "1",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    ).length > 0
+                      ? searchCost(
+                          "1",
+                          studentSearchData.room_number.charAt(1) == "8"
+                            ? "2"
+                            : "1"
+                        )[0]["electric_first"]
+                      : "0"
+                  ) - studentCostTerm1.electric_first
+                }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">ค่าน้ำเหมาจ่าย</td>
+            <td style="vertical-align: middle">
+              {{
+                searchCost(
+                  "1",
+                  studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                ).length > 0
+                  ? searchCost(
+                      "1",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    )[0]["water_first"]
+                  : "0"
+              }}
+            </td>
+            <td style="vertical-align: middle">
+              {{ studentCostTerm1.water_first }}
+            </td>
+            <td style="vertical-align: middle">
+              <span *ngIf="studentCostTerm1" class="text-danger">
+                {{
+                  service.strToInt(
+                    searchCost(
+                      "1",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    ).length > 0
+                      ? searchCost(
+                          "1",
+                          studentSearchData.room_number.charAt(1) == "8"
+                            ? "2"
+                            : "1"
+                        )[0]["water_first"]
+                      : "0"
+                  ) - studentCostTerm1.water_first
+                }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md mb-3">
+          <h3>ภาคเรียนที่ 2</h3>
+        </div>
+        <div class="col-md mb-3 text-right"></div>
+      </div>
+
+      <table class="table table-sm table-borderless table-hover">
+        <thead>
+          <tr>
+            <th scope="col">รายการ</th>
+            <th scope="col">จำนวนเงินที่ต้องชำระ (บาท)</th>
+            <th scope="col">จำนวนเงินที่ชำระแล้ว (บาท)</th>
+            <th scope="col">จำนวนเงินที่ต้องชำระเพิ่ม (บาท)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="vertical-align: middle">ค่าหอพัก</td>
+            <td style="vertical-align: middle">
+              {{
+                searchCost(
+                  "2",
+                  studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                ).length > 0
+                  ? searchCost(
+                      "2",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    )[0]["dormitory"]
+                  : "0"
+              }}
+            </td>
+            <td style="vertical-align: middle">
+              {{ studentCostTerm2.dorimitory }}
+            </td>
+            <td style="vertical-align: middle">
+              <span *ngIf="studentCostTerm1" class="text-danger">
+                {{
+                  service.strToInt(
+                    searchCost(
+                      "2",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    ).length > 0
+                      ? searchCost(
+                          "2",
+                          studentSearchData.room_number.charAt(1) == "8"
+                            ? "2"
+                            : "1"
+                        )[0]["dormitory"]
+                      : "0"
+                  ) - studentCostTerm2.dorimitory
+                }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">ค่าประกันหอพัก</td>
+            <td style="vertical-align: middle">
+              {{
+                searchCost(
+                  "2",
+                  studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                ).length > 0
+                  ? searchCost(
+                      "2",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    )[0]["insurance"]
+                  : "0"
+              }}
+            </td>
+            <td style="vertical-align: middle">
+              {{ studentCostTerm2.insurance }}
+            </td>
+            <td style="vertical-align: middle">
+              <span *ngIf="studentCostTerm1" class="text-danger">
+                {{
+                  service.strToInt(
+                    searchCost(
+                      "2",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    ).length > 0
+                      ? searchCost(
+                          "2",
+                          studentSearchData.room_number.charAt(1) == "8"
+                            ? "2"
+                            : "1"
+                        )[0]["insurance"]
+                      : "0"
+                  ) - studentCostTerm2.insurance
+                }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">ค่าไฟฟ้าล่วงหน้า</td>
+            <td style="vertical-align: middle">
+              {{
+                searchCost(
+                  "2",
+                  studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                ).length > 0
+                  ? searchCost(
+                      "2",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    )[0]["electric_first"]
+                  : "0"
+              }}
+            </td>
+            <td style="vertical-align: middle">
+              {{ studentCostTerm2.electric_first }}
+            </td>
+            <td style="vertical-align: middle">
+              <span *ngIf="studentCostTerm1" class="text-danger">
+                {{
+                  service.strToInt(
+                    searchCost(
+                      "2",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    ).length > 0
+                      ? searchCost(
+                          "2",
+                          studentSearchData.room_number.charAt(1) == "8"
+                            ? "2"
+                            : "1"
+                        )[0]["electric_first"]
+                      : "0"
+                  ) - studentCostTerm2.electric_first
+                }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: middle">ค่าน้ำเหมาจ่าย</td>
+            <td style="vertical-align: middle">
+              {{
+                searchCost(
+                  "2",
+                  studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                ).length > 0
+                  ? searchCost(
+                      "2",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    )[0]["water_first"]
+                  : "0"
+              }}
+            </td>
+            <td style="vertical-align: middle">
+              {{ studentCostTerm2.water_first }}
+            </td>
+            <td style="vertical-align: middle">
+              <span *ngIf="studentCostTerm1" class="text-danger">
+                {{
+                  service.strToInt(
+                    searchCost(
+                      "2",
+                      studentSearchData.room_number.charAt(1) == "8" ? "2" : "1"
+                    ).length > 0
+                      ? searchCost(
+                          "2",
+                          studentSearchData.room_number.charAt(1) == "8"
+                            ? "2"
+                            : "1"
+                        )[0]["water_first"]
+                      : "0"
+                  ) - studentCostTerm2.water_first
+                }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

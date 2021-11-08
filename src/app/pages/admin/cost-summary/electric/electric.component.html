@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="col-md mb-3">
+    <h2>ค่าไฟฟ้าส่วนเกิน</h2>
+  </div>
+  <div class="col-md mb-3">
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>วันที่</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            [formControl]="date"
+            readonly
+            (click)="picker1.open()"
+            (dateChange)="dateChange($event.value)"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <div class="dropdown">
+          <button
+            class="btn btn-warning btn-sm dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            [disabled]="listStudentCostOnDate.length <= 0"
+          >
+            Export
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a
+              class="dropdown-item"
+              href="javascript:void(0)"
+              (click)="
+                exportFile(
+                  listStudentCostOnDate,
+                  'ค่าไฟฟ้าส่วนเกินประจำวัน',
+                  'pdf'
+                )
+              "
+              >PDF</a
+            >
+            <a
+              class="dropdown-item"
+              href="javascript:void(0)"
+              (click)="
+                exportFile(
+                  listStudentCostOnDate,
+                  'ค่าไฟฟ้าส่วนเกินประจำวัน',
+                  'xls'
+                )
+              "
+              >Excel (XLS)</a
+            >
+            <a
+              class="dropdown-item"
+              href="javascript:void(0)"
+              (click)="
+                exportFile(
+                  listStudentCostOnDate,
+                  'ค่าไฟฟ้าส่วนเกินประจำวัน',
+                  'xlsx'
+                )
+              "
+              >Excel (XLSX)</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div
+    class="card-body"
+    *ngIf="listStudentCostOnDate.length <= 0; else isValue"
+  >
+    <h4>ไม่พบข้อมูล</h4>
+  </div>
+  <ng-template #isValue>
+    <div class="card-body">
+      <table class="table table-bordered table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col">เลขที่ใบเสร็จรับเงิน</th>
+            <th scope="col">วันที่ใบเสร็จรับเงิน</th>
+            <th scope="col">เลขที่ห้องพัก</th>
+            <th scope="col">ค่าไฟฟ้าประจำเดือน</th>
+            <th scope="col">จำนวนเงิน</th>
+            <th scope="col">หมายเหตุ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of listStudentCostOnDate; let i = index">
+            <td>{{ x.receiptNumber }}</td>
+            <td>{{ subDate(x.time_pay) }}</td>
+            <td>{{ x.room_number }}</td>
+            <td>{{ x.electric_cost_month }}</td>
+            <td>{{ x.electric_cost_add }}</td>
+            <td>{{ "" }}</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align: center">
+              {{
+                service.ArabicNumberToText(
+                  sumCol(listStudentCostOnDate, "electric_cost_add")
+                )
+              }}
+            </td>
+            <td>{{ sumCol(listStudentCostOnDate, "electric_cost_add") }}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
+</div>

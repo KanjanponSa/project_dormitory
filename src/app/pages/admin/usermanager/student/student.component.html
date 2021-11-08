@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="col-md-7 mb-3"></div>
+  <div class="col-md-5 mb-3">
+    <mat-form-field appearance="outline">
+      <mat-label>ค้นหานักศึกษา</mat-label>
+      <input
+        matInput
+        placeholder="ชื่อ - นามสกุล, หมายเลขประจำดัวประชาชน"
+        (keyup.enter)="searchAdmin(textInput)"
+        type="text"
+        #textInput
+      />
+      <button mat-button matSuffix (click)="searchAdmin(textInput)">
+        <mat-icon matSuffix>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>
+
+<form
+  [formGroup]="userForm"
+  (ngSubmit)="formAdminSubmit()"
+  *ngIf="userSelected"
+>
+  <div class="row">
+    <div class="col-md-7 mb-3">
+      <div class="card box-shadow" style="border: unset">
+        <h4 class="card-header bg-white">
+          {{ userSelected ? "แก้ไขข้อมูล" : "เพิ่มข้อมูล" }}
+        </h4>
+        <div class="card-body">
+          <mat-form-field>
+            <mat-label
+              >ชื่อผู้ใช้งาน (รหัสนักศึกษา)
+              {{ userSelected ? "(แก้ไขไม่ได้)" : "" }}</mat-label
+            >
+            <input
+              matInput
+              formControlName="username"
+              [readOnly]="userSelected"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>คำนำหน้า</mat-label>
+            <mat-select formControlName="nameTitle">
+              <mat-option [value]="'นาย'">
+                {{ "นาย" }}
+              </mat-option>
+              <mat-option [value]="'นาง'">
+                {{ "นาง" }}
+              </mat-option>
+              <mat-option [value]="'นางสาว'">
+                {{ "นางสาว" }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>ชื่อจริง</mat-label>
+            <input matInput formControlName="fname" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>นามสกุล</mat-label>
+            <input matInput formControlName="lname" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>บทบาทผู้ใช้งาน</mat-label>
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let x of listAdminType" [value]="x.type_id">
+                {{ x.type_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5 mb-3">
+      <div class="row">
+        <div class="col-md mb-3">
+          <div class="card box-shadow" style="border: unset">
+            <h4 class="card-header bg-white">
+              {{ userSelected ? "เปลี่ยนรหัสผ่าน" : "รหัสผ่าน" }}
+            </h4>
+            <div class="card-body">
+              <mat-form-field>
+                <mat-label>รหัสผ่าน</mat-label>
+                <input
+                  matInput
+                  formControlName="password"
+                  type="password"
+                  [required]="userSelected == null"
+                />
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>ยืนยันรหัสผ่าน</mat-label>
+                <input
+                  matInput
+                  formControlName="re_password"
+                  type="password"
+                  [required]="userSelected == null"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md">
+          <div class="card box-shadow" style="border: unset">
+            <div class="card-body">
+              <div class="text-center">
+                <button
+                  type="button"
+                  class="btn btn-warning btn-sm mr-2"
+                  (click)="reset()"
+                >
+                  รีเซ็ต
+                </button>
+                <button type="submit" class="btn btn-primary btn-sm ml-2">
+                  บันทึก
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

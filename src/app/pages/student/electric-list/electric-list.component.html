@@ -1,0 +1,77 @@
+<div class="box-padding">
+  <div *ngIf="roomSearchData != null">
+    <div id="accordionExample" *ngIf="roomSearchData.length > 0">
+      <div class="mb-3" *ngFor="let x of roomSearchData; let i = index">
+        <div class="card">
+          <div class="card-header" id="headingOne{{ i }}">
+            <h2 class="mb-0">
+              <button
+                class="btn btn-link"
+                type="button"
+                data-toggle="collapse"
+                [attr.data-target]="'#collapseOne' + i"
+                aria-expanded="false"
+                [attr.aria-controls]="'collapseOne' + i"
+              >
+                รายการค่าไฟ : {{ x.month_read }} ({{
+                  x.isPay == "0" ? "ค้างชำระ" : "ชำระแล้ว"
+                }})
+              </button>
+            </h2>
+          </div>
+
+          <div
+            id="collapseOne{{ i }}"
+            class="collapse"
+            [attr.aria-labelledby]="'headingOne' + i"
+            data-parent="#accordionExample"
+          >
+            <div class="card-body">
+              <h3>
+                เลขที่จดครั้งก่อน :
+                {{
+                  getOldMonth(x.month_read)
+                    ? getOldMonth(x.month_read)["value_meter"]
+                    : 0
+                }}&nbsp;หน่วย
+              </h3>
+              <h3>เลขที่จดครั้งหลัง : {{ x.value_meter }}&nbsp;หน่วย</h3>
+              <h3>จำนวนหน่วยที่ใช้ : {{ x.electric_cost_unit }}&nbsp;หน่วย</h3>
+              <h3>
+                ค่าไฟคงเหลือที่ยกยอดมา : {{ x.electric_cost_old }}&nbsp;บาท
+              </h3>
+              <h3>ค่าไฟฟ้าประจำเดือน : {{ x.electric_cost_month }}&nbsp;บาท</h3>
+              <h3>ค่าไฟคงเหลือยกยอดไป : {{ x.electric_cost_left }}&nbsp;บาท</h3>
+              <h3 class="text-danger">
+                ค่าไฟที่ต้องชำระเพิ่ม : {{ x.electric_cost_add }}&nbsp;บาท
+              </h3>
+
+              <h3>วันที่บันทึกหน่วยมิเตอร์ : {{ x.update_at }}</h3>
+              <h3>
+                ผู้ที่บันทึกหน่วยมิเตอร์ : {{ x.admin_prename
+                }}{{ x.admin_fname }}
+                {{ x.admin_lname }}
+              </h3>
+
+              <div *ngIf="x.isPay == '0'" class="mt-3">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-sm"
+                  (click)="printPDF(x)"
+                >
+                  พิมพ์ใบแจ้งชำระ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="roomSearchData == null">
+    <div class="card">
+      <div class="card-body">ไม่พบข้อมูล</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<nav mat-tab-nav-bar style="border: unset" class="bg-white box-shadow">
+  <a
+    mat-tab-link
+    [routerLink]="['/student-cost/dormitory']"
+    routerLinkActive="router-active"
+  >
+    {{ "ค่าใช้จ่ายหอพัก" }}
+  </a>
+
+  <a
+    mat-tab-link
+    [routerLink]="['/student-cost/electric']"
+    routerLinkActive="router-active"
+  >
+    {{ "ค่าไฟฟ้าส่วนเกิน" }}
+  </a>
+</nav>
+
+<div class="box-padding">
+  <router-outlet></router-outlet>
+</div>

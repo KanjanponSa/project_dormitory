@@ -1,0 +1,214 @@
+<div class="box-padding">
+  <div class="row">
+    <div class="col-md-5 mb-3">
+      <h1>บันทึกค่ามิเตอร์ไฟฟ้า</h1>
+      <h4>
+        {{
+          "ประจำเดือน" +
+            service.month[monthSelect] +
+            " " +
+            (serverTime.getFullYear() + 543)
+        }}
+      </h4>
+    </div>
+
+    <div class="col-md-7 mb-3">
+      <div class="row">
+        <div class="col-md"></div>
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>หอพัก</mat-label>
+            <mat-select
+              [(value)]="buildSelect"
+              (selectionChange)="selectRoom()"
+            >
+              <mat-option [value]="''"> โปรดเลือกหอพัก </mat-option>
+              <mat-option [value]="'2'"> ชาย </mat-option>
+              <mat-option [value]="'1'"> หญิง </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>ชั้น</mat-label>
+            <mat-select
+              [(value)]="floorSelect"
+              (selectionChange)="selectRoom()"
+            >
+              <mat-option [value]="''"> โปรดเลือกชั้น </mat-option>
+              <mat-option
+                *ngFor="let x of ['2', '3', '4', '5', '6', '7', '8']"
+                [value]="x"
+              >
+                {{ x }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md"></div>
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>เดือน</mat-label>
+            <mat-select
+              [(value)]="monthSelect"
+              (selectionChange)="initialData()"
+            >
+              <mat-option [value]="''"> โปรดเลือกเดือน </mat-option>
+              <mat-option
+                *ngFor="let x of service.month; let i = index"
+                [value]="i"
+              >
+                {{ x }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="roomSelected.length > 0">
+    <div class="col-md-4 col-lg-3 mb-3" *ngFor="let x of roomSelected">
+      <div
+        class="card {{
+          getMeterBill(
+            x.room_number,
+            service.zeroPad(monthSelect + 1, 10) +
+              '/' +
+              serverTime.getFullYear()
+          )
+            ? 'isValueCurrent'
+            : 'noneValueCurrent'
+        }}"
+      >
+        <div class="card-body">
+          <div class="mb-3">
+            <h3>ห้อง : {{ x.room_number }}</h3>
+            <h3>
+              หน่วยที่จดเดือนก่อน :
+              {{
+                getMeterBill(
+                  x.room_number,
+                  service.zeroPad(monthSelect, 10) +
+                    "/" +
+                    serverTime.getFullYear()
+                )
+                  ? getMeterBill(
+                      x.room_number,
+                      service.zeroPad(monthSelect, 10) +
+                        "/" +
+                        serverTime.getFullYear()
+                    )["value_meter"]
+                  : "-"
+              }}&nbsp;หน่วย
+            </h3>
+            <h3>
+              วันที่จดเดือนก่อน :
+              {{
+                getMeterBill(
+                  x.room_number,
+                  service.zeroPad(monthSelect, 10) +
+                    "/" +
+                    serverTime.getFullYear()
+                )
+                  ? getMeterBill(
+                      x.room_number,
+                      service.zeroPad(monthSelect, 10) +
+                        "/" +
+                        serverTime.getFullYear()
+                    )["update_at"].split(" ")[0]
+                  : "-"
+              }}
+            </h3>
+          </div>
+          <div>
+            <input
+              #currentBill
+              type="hidden"
+              [value]="
+                getMeterBill(
+                  x.room_number,
+                  service.zeroPad(monthSelect + 1, 10) +
+                    '/' +
+                    serverTime.getFullYear()
+                )
+                  ? getMeterBill(
+                      x.room_number,
+                      service.zeroPad(monthSelect + 1, 10) +
+                        '/' +
+                        serverTime.getFullYear()
+                    )['value_meter']
+                  : ''
+              "
+            />
+
+            <form
+              #formMeter="ngForm"
+              (ngSubmit)="
+                formMeter.valid
+                  ? updateBill({
+                      room_number: x.room_number,
+                      meter: formMeter.value.meter,
+                      old_meter: formMeter.value.old_meter,
+                      old: getMeterBill(
+                        x.room_number,
+                        service.zeroPad(monthSelect, 10) +
+                          '/' +
+                          serverTime.getFullYear()
+                      )
+                    })
+                  : service.showAlert(
+                      'ห้อง ' + x.room_number,
+                      'โปรดกรอกข้อมูลให้ถูกต้อง',
+                      'warning'
+                    )
+              "
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>หน่วยไฟฟ้ารอบก่อน</mat-label>
+                <input
+                  matInput
+                  placeholder=""
+                  type="number"
+                  name="old_meter"
+                  [ngModel]="
+                    getMeterBill(
+                      x.room_number,
+                      service.zeroPad(monthSelect, 10) +
+                        '/' +
+                        serverTime.getFullYear()
+                    )?.value_meter || 0
+                  "
+                  required
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>หน่วยไฟฟ้าล่าสุด</mat-label>
+                <input
+                  matInput
+                  placeholder=""
+                  type="number"
+                  name="meter"
+                  [ngModel]="currentBill.value"
+                  required
+                />
+              </mat-form-field>
+
+              <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary btn-sm">
+                  บันทึก
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

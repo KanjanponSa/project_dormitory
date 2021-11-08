@@ -1,0 +1,30 @@
+.sidenav-container {
+  height: 100%;
+  background-color: rgb(248, 249, 254);
+}
+
+.sidenav {
+  width: 270px;
+  background-color: #fff;
+  border: unset;
+}
+
+// .sidenav .mat-toolbar {
+//   background: inherit;
+// }
+
+.mat-toolbar {
+  background-color: #d36805;
+  color: #fff;
+}
+
+.router-active {
+  color: #d36805;
+  font-weight: bold;
+  background-color: #eaeaea;
+  border-right: 3px solid #d36805;
+}
+
+.mat-drawer.mat-drawer-side {
+  z-index: 1 !important;
+}

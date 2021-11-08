@@ -1,0 +1,121 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(248, 249, 254);
+}
+
+html,
+body.swal2-height-auto {
+  all: unset !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: unset !important;
+}
+
+* {
+  font-family: "Prompt", sans-serif !important;
+}
+
+.material-icons {
+  font-family: "Material Icons" !important;
+}
+
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+  height: unset !important;
+}
+
+.mat-list-base {
+  padding: unset !important;
+}
+
+.mat-list-item-content {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+mat-form-field {
+  width: 100%;
+  line-height: unset !important;
+}
+
+mat-hint {
+  padding-top: 1.34375em;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: unset;
+}
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container {
+  z-index: 99999 !important;
+}
+
+.box-padding {
+  padding: 15px;
+}
+
+.mat-drawer-container {
+  background-color: #fff;
+}
+
+.circle-box {
+  height: 40px;
+  line-height: 40px;
+  width: 40px;
+  border-radius: 50% !important;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  color: #007bff;
+}
+
+.mat-tab-label-active {
+  color: #007bff;
+  font-weight: bold;
+  opacity: 1 !important;
+  background-color: #eaeaea;
+}
+
+.mat-ink-bar {
+  background-color: #007bff !important;
+  height: 3px !important;
+}
+
+.box-shadow {
+  box-shadow: 0 4px 8px 0 rgba(136, 152, 170, 0.15) !important;
+}
+
+.card {
+  border: unset !important;
+  box-shadow: 0 4px 8px 0 rgba(136, 152, 170, 0.15);
+  .card-header {
+    background-color: #fff !important;
+  }
+}
+
+.fc-left {
+  font-size: 10px !important;
+}
+
+.modal-backdrop {
+  display: none !important;
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.3);
+}

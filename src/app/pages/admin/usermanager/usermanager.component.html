@@ -1,0 +1,21 @@
+<nav mat-tab-nav-bar style="border: unset;" class="bg-white box-shadow">
+  <a
+    mat-tab-link
+    [routerLink]="['/usermanager/admin']"
+    routerLinkActive="router-active"
+  >
+    {{ "ผู้ดูแลหอพัก" }}
+  </a>
+
+  <a
+    mat-tab-link
+    [routerLink]="['/usermanager/student']"
+    routerLinkActive="router-active"
+  >
+    {{ "นักศึกษา" }}
+  </a>
+</nav>
+
+<div class="box-padding">
+  <router-outlet></router-outlet>
+</div>

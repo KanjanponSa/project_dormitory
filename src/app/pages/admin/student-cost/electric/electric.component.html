@@ -1,0 +1,188 @@
+<div class="row">
+  <div class="col-md-4">
+    <form
+      #formSearchStudent="ngForm"
+      (ngSubmit)="
+        formSearchStudent.valid
+          ? searchRoom(formSearchStudent.value.roomNumber)
+          : ''
+      "
+    >
+      <table class="table table-sm table-borderless">
+        <tbody>
+          <tr>
+            <td style="vertical-align: middle; align-items: center">
+              <mat-form-field appearance="outline">
+                <mat-label>เลขห้อง</mat-label>
+                <input
+                  matInput
+                  placeholder=""
+                  type="text"
+                  name="roomNumber"
+                  ngModel
+                  required
+                />
+              </mat-form-field>
+            </td>
+            <td style="vertical-align: middle; align-items: center">
+              <button type="submit" class="btn btn-primary">ค้นหา</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="roomSearchData != null">
+  <div id="accordionExample" *ngIf="roomSearchData.length > 0">
+    <div class="mb-3" *ngFor="let x of roomSearchData; let i = index">
+      <div class="card">
+        <div class="card-header" id="headingOne{{ i }}">
+          <h2 class="mb-0">
+            <button
+              class="btn btn-link"
+              type="button"
+              data-toggle="collapse"
+              [attr.data-target]="'#collapseOne' + i"
+              aria-expanded="false"
+              [attr.aria-controls]="'collapseOne' + i"
+            >
+              รายการค่าไฟ : {{ x.month_read }} ({{
+                x.isPay == "0" ? "ค้างชำระ" : "ชำระแล้ว"
+              }})
+            </button>
+          </h2>
+        </div>
+
+        <div
+          id="collapseOne{{ i }}"
+          class="collapse"
+          [attr.aria-labelledby]="'headingOne' + i"
+          data-parent="#accordionExample"
+        >
+          <div class="card-body">
+            <h3>
+              เลขที่จดครั้งก่อน :
+              {{
+                getOldMonth(x.month_read)
+                  ? getOldMonth(x.month_read)["value_meter"]
+                  : 0
+              }}&nbsp;หน่วย
+            </h3>
+            <h3>เลขที่จดครั้งหลัง : {{ x.value_meter }}&nbsp;หน่วย</h3>
+            <h3>จำนวนหน่วยที่ใช้ : {{ x.electric_cost_unit }}&nbsp;หน่วย</h3>
+            <h3>ค่าไฟคงเหลือที่ยกยอดมา : {{ x.electric_cost_old }}&nbsp;บาท</h3>
+            <h3>ค่าไฟฟ้าประจำเดือน : {{ x.electric_cost_month }}&nbsp;บาท</h3>
+            <h3>ค่าไฟคงเหลือยกยอดไป : {{ x.electric_cost_left }}&nbsp;บาท</h3>
+            <h3 class="text-danger">
+              ค่าไฟที่ต้องชำระเพิ่ม : {{ x.electric_cost_add }}&nbsp;บาท
+            </h3>
+
+            <h3>วันที่บันทึกหน่วยมิเตอร์ : {{ x.update_at }}</h3>
+            <h3>
+              ผู้ที่บันทึกหน่วยมิเตอร์ : {{ x.admin_prename
+              }}{{ x.admin_fname }}
+              {{ x.admin_lname }}
+            </h3>
+
+            <div class="mt-3 mb-3" *ngIf="x.isPay == '0'">
+              <button
+                type="submit"
+                class="btn btn-primary btn-sm"
+                data-toggle="modal"
+                data-target="#exampleModalReceiptNumber"
+                (click)="listSelected = x"
+              >
+                ชำระเงิน
+              </button>
+            </div>
+
+            <div class="mt-3">
+              <div class="mt-3" *ngIf="x.std_name">
+                <h3>รายชื่อนักศึกษา</h3>
+              </div>
+
+              <table
+                class="table table-hover teable-sm table-borderless"
+                *ngIf="x.std_name"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">รายชื่อนักศึกษา</th>
+                    <!-- <th scope="col"></th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let xx of x.std_name.split(','); let i = index">
+                    <td style="vertical-align: middle; text-align: center">
+                      {{ i + 1 }}
+                    </td>
+                    <td style="vertical-align: middle">{{ xx }}</td>
+                    <!-- <td style="vertical-align: middle;">
+                      <button type="submit" class="btn btn-primary btn-sm">
+                        ชำระเงิน
+                      </button>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="roomSearchData == null">
+  <div class="card">
+    <div class="card-body">ไม่พบข้อมูล</div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalReceiptNumber"
+  tabindex="-1"
+  aria-labelledby="exampleModalReceiptNumberLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalReceiptNumberLabel">
+          เลขที่ใบเสร็จ
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <mat-form-field class="example-full-width">
+          <mat-label>เลขที่ใบเสร็จ</mat-label>
+          <input matInput placeholder="" [(ngModel)]="receiptNumber" />
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          ปิด
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="payElectric(listSelected)"
+        >
+          บันทึก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

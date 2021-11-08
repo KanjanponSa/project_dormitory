@@ -1,0 +1,136 @@
+<div class="box-padding">
+  <div class="row">
+    <div class="col-6 mb-3">
+      <h1>รายงานการค้างชำระ</h1>
+    </div>
+    <div class="col-2 mb-3"></div>
+    <div class="col-4 mb-3">
+      <mat-form-field appearance="outline">
+        <mat-label>ภาคการศึกษา</mat-label>
+        <mat-select [(value)]="termSelect" (selectionChange)="onSelectTerm()">
+          <mat-option [value]="''"> โปรดเลือกภาคการศึกษา </mat-option>
+          <mat-option [value]="'1'"> ภาคการศึกษาที่ 1 </mat-option>
+          <mat-option [value]="'2'"> ภาคการศึกษาที่ 2 </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div *ngIf="listOverdue.length <= 0; else foundOverdue">
+    <div class="card">
+      <div class="card-body">ไม่พบข้อมูล</div>
+    </div>
+  </div>
+
+  <ng-template #foundOverdue>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="btn-group" *ngIf="listOverdueFilter.length > 0">
+              <button
+                type="button"
+                class="btn btn-danger dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Export
+              </button>
+              <div class="dropdown-menu">
+                <a
+                  class="dropdown-item"
+                  href="javascript:void(0)"
+                  (click)="exportPDF()"
+                  >PDF</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="javascript:void(0)"
+                  (click)="exportXLS('xls')"
+                  >XLS</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="javascript:void(0)"
+                  (click)="exportXLS('xlsx')"
+                  >XLSX</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-3 mb-3">
+            <mat-form-field appearance="outline">
+              <mat-label>คณะ</mat-label>
+              <mat-select
+                [(value)]="facultySelect"
+                (selectionChange)="branchSelect = ''; listOverdueFilter = []"
+              >
+                <mat-option [value]="''"> โปรดเลือกคณะ </mat-option>
+                <mat-option *ngFor="let x of listOfFaculty" [value]="x.key">
+                  {{ x.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3 mb-3" *ngIf="facultySelect.length > 0">
+            <mat-form-field appearance="outline">
+              <mat-label>สาขาวิชา</mat-label>
+              <mat-select
+                [(value)]="branchSelect"
+                (selectionChange)="onSelectBranch()"
+              >
+                <mat-option [value]="''"> โปรดเลือกสาขาวิชา </mat-option>
+                <mat-option *ngFor="let x of getBranch()" [value]="x.key">
+                  {{ x.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div *ngIf="listOverdueFilter.length > 0">
+          <table class="table table-sm table-bordered">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">รหัสนักศึกษา</th>
+                <th scope="col">ชื่อ - สกุล</th>
+                <th scope="col">ห้องพัก</th>
+                <th scope="col">ค่าหอ (ค้างชำระ)</th>
+                <th scope="col">ค่าประกัน (ค้างชำระ)</th>
+                <th scope="col">ค่าไฟฟ้าล่วงหน้า (ค้างชำระ)</th>
+                <th scope="col">ค่าน้ำ (ค้างชำระ)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let x of listOverdueFilter
+                    | paginate: { itemsPerPage: 20, currentPage: p };
+                  let i = index
+                "
+              >
+                <td>{{ p * 20 - 20 + i + 1 }}</td>
+                <td>{{ x.std_code }}</td>
+                <td>{{ x.nameTitle }}{{ x.fname }}{{ " " }}{{ x.lname }}</td>
+                <td>{{ x.room_number }}</td>
+                <td>{{ x.dormitory_overdue }}</td>
+                <td>{{ x.insurance_overdue }}</td>
+                <td>{{ x.electric_first_overdue }}</td>
+                <td>{{ x.water_first_overdue }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="text-center">
+            <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

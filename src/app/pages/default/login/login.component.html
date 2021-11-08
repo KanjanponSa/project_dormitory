@@ -1,0 +1,96 @@
+<div class="display-page">
+  <div class="content">
+    <div class="row justify-content-center">
+      <div class="col-md-10" style="max-width: 700px;">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="text-center">
+              <div class="text-center">
+                <img
+                src="  assets/img/logo2.png"
+                alt="logo"
+                width="180px"
+            />
+            </div>
+            <div class="text-center mb-3">
+              <h1>ลงชื่อเข้าใช้งาน</h1>
+              <h3>ระบบเว็บแอปพลิเคชันการจัดการค่าใช้จ่ายนักศึกษา</h3>
+            </div>
+            <div style="padding: 20px;">
+              <div class="text-center">
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  (click)="openSSO()"
+                >
+                  เข้าใช้งานด้วยบัญชีอินเทอร์เน็ต มทร.อีสาน
+                </button>
+              </div>
+              <div
+                style="margin-top: 20px; margin-bottom: 20px;"
+                class="text-center"
+              >
+                <h3>หรือ</h3>
+              </div>
+              <form
+                [formGroup]="formLogin"
+                (ngSubmit)="formLogin.valid ? onLogin() : ''"
+              >
+                <div class="mb-5">
+                  <mat-form-field appearance="outline">
+                    <mat-label>ชื่อผู้ใช้งาน</mat-label>
+                    <input
+                      matInput
+                      placeholder=""
+                      type="text"
+                      formControlName="username"
+                    />
+                    <mat-hint style="font-size: 13px;">
+                      *สำหรับนักศึกษา ให้ใช้รหัสประจำตัวนักศึกษาในการเข้าสู่ระบบ
+                    </mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>รหัสผ่าน</mat-label>
+                  <input
+                    matInput
+                    placeholder=""
+                    type="password"
+                    formControlName="password"
+                  />
+                  <mat-hint style="font-size: 15px;">
+                    <a [routerLink]="['/forget-password']">ลืมรหัสผ่าน</a>
+                  </mat-hint>
+                </mat-form-field>
+
+                <div style="margin-top: 20px;" class="text-center mb-1">
+                  <button type="submit" class="btn btn-primary">
+                    เข้าใช้งาน
+                  </button>
+                </div>
+                <div class="text-center">
+                  <button
+                    type="button"
+                    class="btn btn-link"
+                    style="text-decoration: unset;"
+                    [routerLink]="['/register']"
+                  >
+                    สร้างบัญชีผู้ใช้
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <p>
+            Copyright © 2020 หอพักนักศึกษามหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน
+            นครราชสีมา
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

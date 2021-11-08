@@ -1,0 +1,120 @@
+<div class="display-page">
+  <div class="content">
+    <div class="row justify-content-center">
+      <div class="col-md-10" style="max-width: 700px;">
+        <div class="card mb-3">
+          <div class="card-body">
+            <!-- <div class="text-center">
+              <img
+                src="assets/img/RMUTI_LOGO.png"
+                alt="RMUTI_LOGO"
+                width="60px"
+              />
+            </div> -->
+            <div class="text-left mb-3">
+              <h1>สร้างบัญชีผู้ใช้</h1>
+              <h3>ระบบเว็บแอปพลิเคชันการจัดการค่าใช้จ่ายนักศึกษา</h3>
+            </div>
+            <div style="padding: 20px;">
+              <form
+                [formGroup]="formRegister"
+                (ngSubmit)="formRegister.valid ? onRegister() : ''"
+              >
+                <div class="row">
+                  <div class="col-md mb-5">
+                    <mat-form-field appearance="outline">
+                      <mat-label>ชื่อ</mat-label>
+                      <input
+                        matInput
+                        placeholder=""
+                        type="text"
+                        formControlName="fname"
+                      />
+                      <mat-hint style="font-size: 13px;">
+                        ไม่มีคำนำหน้า
+                      </mat-hint>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md mb-5">
+                    <mat-form-field appearance="outline">
+                      <mat-label>นามสกุล</mat-label>
+                      <input
+                        matInput
+                        placeholder=""
+                        type="text"
+                        formControlName="lname"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md mb-5">
+                    <mat-form-field appearance="outline">
+                      <mat-label>รหัสนักศึกษา</mat-label>
+                      <input
+                        matInput
+                        placeholder=""
+                        type="text"
+                        formControlName="std_code"
+                      />
+                      <mat-hint style="font-size: 13px;">
+                        โปรดกรอกรหัสนักศึกษาแบบมีขีด *ตัวอย่าง 12345678901-2
+                      </mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md mb-5">
+                    <mat-form-field appearance="outline">
+                      <mat-label>รหัสผ่าน</mat-label>
+                      <input
+                        matInput
+                        placeholder=""
+                        type="password"
+                        formControlName="password"
+                      />
+                      <mat-hint style="font-size: 13px;">
+                        ความยาวรหัสผ่านอย่างน้อย 8 ตัวอักษร
+                      </mat-hint>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md">
+                    <mat-form-field appearance="outline">
+                      <mat-label>ยืนยันรหัสผ่าน</mat-label>
+                      <input
+                        matInput
+                        placeholder=""
+                        type="password"
+                        formControlName="re_password"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                  <div class="float-left">
+                    <a [routerLink]="['/login']">ลงชื่อเข้าใช้งาน</a>
+                  </div>
+                  <div class="float-right">
+                    <button type="submit" class="btn btn-primary">
+                      สร้างบัญชี
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <p>
+            Copyright © 2020 หอพักนักศึกษามหาวิทยาลัยเทคโนโลยีราชมงคลอีสาน
+            นครราชสีมา
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

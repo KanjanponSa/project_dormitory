@@ -1,0 +1,151 @@
+<div class="box-padding">
+  <div class="row">
+    <div class="col-md-5 mb-3">
+      <h1>ประวัติค่ามิเตอร์ไฟฟ้า</h1>
+    </div>
+
+    <div class="col-md-7 mb-3">
+      <div class="row">
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>เดือน</mat-label>
+            <mat-select [(value)]="monthSelect">
+              <mat-option *ngFor="let x of allMonth" [value]="x">
+                {{ service.month[service.strToInt(x.split("/")[0]) - 1] }}
+                {{ service.strToInt(x.split("/")[1]) + 543 }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>หอพัก</mat-label>
+            <mat-select
+              [(value)]="buildSelect"
+              (selectionChange)="selectRoom()"
+            >
+              <mat-option [value]="''">
+                โปรดเลือกหอพัก
+              </mat-option>
+              <mat-option [value]="'2'">
+                ชาย
+              </mat-option>
+              <mat-option [value]="'1'">
+                หญิง
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>ชั้น</mat-label>
+            <mat-select
+              [(value)]="floorSelect"
+              (selectionChange)="selectRoom()"
+            >
+              <mat-option [value]="''">
+                โปรดเลือกชั้น
+              </mat-option>
+              <mat-option
+                *ngFor="let x of ['2', '3', '4', '5', '6', '7', '8']"
+                [value]="x"
+              >
+                {{ x }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row" *ngIf="roomSelected.length > 0" id="accordionExample">
+    <div
+      class="col-md-4 col-lg-3 mb-3"
+      *ngFor="let x of roomSelected; let i = index"
+    >
+      <div class="card">
+        <div class="card-header" id="headingOne{{ i }}">
+          <h2 class="mb-0">
+            <button
+              class="btn btn-link"
+              type="button"
+              data-toggle="collapse"
+              [attr.data-target]="'#collapseOne' + i"
+              aria-expanded="false"
+              [attr.aria-controls]="'collapseOne' + i"
+            >
+              ห้อง : {{ x.room_number }}
+            </button>
+          </h2>
+        </div>
+
+        <div
+          id="collapseOne{{ i }}"
+          class="collapse"
+          [attr.aria-labelledby]="'headingOne' + i"
+          data-parent="#accordionExample"
+        >
+          <div class="card-body">
+    
+            <div class="mb-3" *ngFor="let xx of getMeterInRoom(x.room_number)">
+              <p>เดือน : {{ xx.month_read }}</p>
+              <p>หน่วยไฟฟ้า : {{ xx.value_meter }}&nbsp;หน่วย</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="card">
+    <div class="card-body">
+      <table
+        class="table table-bordered table-sm table-hover"
+        *ngIf="roomSelected.length > 0"
+      >
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">หมายเลขห้อง</th>
+            <th scope="col">หน่วยมิเตอร์ไฟฟ้า</th>
+            <th scope="col">ผู้จดบันทึก</th>
+            <!-- <th scope="col">วันที่บันทึก</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of roomSelected; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ x.room_number }}</td>
+            <td>
+              {{
+                getMeterInRoom(x.room_number).length > 0
+                  ? getMeterInRoom(x.room_number)[0]["value_meter"] + " หน่วย"
+                  : "-"
+              }}
+            </td>
+            <td>
+              {{
+                getMeterInRoom(x.room_number).length > 0
+                  ? getMeterInRoom(x.room_number)[0]["fname"] +
+                    " " +
+                    getMeterInRoom(x.room_number)[0]["lname"]
+                  : "-"
+              }}
+            </td>
+            <!-- <td>
+              {{
+                getMeterInRoom(x.room_number).length > 0
+                  ? getMeterInRoom(x.room_number)[0]["update_at"]
+                  : "-"
+              }}
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

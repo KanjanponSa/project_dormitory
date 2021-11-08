@@ -1,0 +1,252 @@
+<div class="row">
+  <div class="col-md-5 mb-3">
+    <h1>จัดการรายการค่าใช้จ่าย (ห้องแอร์)</h1>
+  </div>
+  <div class="col-md-7 mb-3"></div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <form
+      [formGroup]="formCostTerm1"
+      (ngSubmit)="
+        formCostTerm1.valid
+          ? onSubmitTerm1()
+          : service.showAlert('', 'โปรดกรอกข้อมูลให้ครบทุกช่อง', 'error')
+      "
+    >
+      <h3>ภาคเรียนที่ 1</h3>
+      <div class="mt-3" style="overflow: auto;">
+        <table class="table table-sm table-borderless table-hover">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">รายการ</th>
+              <th scope="col">ค่าใช้จ่าย</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="vertical-align: middle;">
+                1
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าหอพัก
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="dormitory"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: middle;">
+                2
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าประกันหอพัก
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="insurance"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: middle;">
+                3
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าไฟฟ้า (เก็บครั้งแรกเข้า)
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="electric_first"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: middle;">
+                4
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าน้ำ (เก็บครั้งแรกเข้า)
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="water_first"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: middle;">
+                5
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าไฟฟ้า (หน่วย)
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="electric_unit"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-3 text-center">
+        <button type="submit" class="btn btn-primary">บันทึก</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-body">
+    <form
+      [formGroup]="formCostTerm2"
+      (ngSubmit)="
+        formCostTerm2.valid
+          ? onSubmitTerm2()
+          : service.showAlert('', 'โปรดกรอกข้อมูลให้ครบทุกช่อง', 'error')
+      "
+    >
+      <h3>ภาคเรียนที่ 2</h3>
+      <div class="mt-3" style="overflow: auto;">
+        <table class="table table-sm table-borderless table-hover">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">รายการ</th>
+              <th scope="col">ค่าใช้จ่าย</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="vertical-align: middle;">
+                1
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าหอพัก
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="dormitory"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: middle;">
+                2
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าประกันหอพัก
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="insurance"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: middle;">
+                3
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าไฟฟ้า (เก็บครั้งแรกเข้า)
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="electric_first"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: middle;">
+                4
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าน้ำ (เก็บครั้งแรกเข้า)
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="water_first"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align: middle;">
+                5
+              </td>
+              <td style="vertical-align: middle;">
+                ค่าไฟฟ้า (หน่วย)
+              </td>
+              <td style="vertical-align: middle;">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="electric_unit"
+                />
+              </td>
+              <td style="vertical-align: middle;">
+                บาท
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-3 text-center">
+        <button type="submit" class="btn btn-primary">บันทึก</button>
+      </div>
+    </form>
+  </div>
+</div>
